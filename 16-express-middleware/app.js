@@ -7,6 +7,19 @@ const port = 3000
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
+// Builtin Middleware
+app.use(express.static('public'));
+
+// Application middleware
+app.use((req, res, next) => {
+    console.log('Time: ', Date.now());
+    next();
+})
+app.use((req, res, next) => {
+    console.log('Ini middleware ke 2');
+    next();
+})
+
 app.get('/', (req, res) => {
     // res.sendFile('./index.html', { root: __dirname });
     const mahasiswa = [{
