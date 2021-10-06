@@ -1,6 +1,6 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-const { loadContact, findContact } = require('./utils/contacts');
+const { loadContact, findContact, addContact } = require('./utils/contacts');
 
 const app = express()
 const port = 3000
@@ -13,6 +13,7 @@ app.use(expressLayouts);
 
 // Builtin Middleware
 app.use(express.static('public'));
+app.use(express.urlencoded());
 
 app.get('/', (req, res) => {
     // res.sendFile('./index.html', { root: __dirname });
@@ -53,6 +54,22 @@ app.get('/contact', (req, res) => {
         contacts, // contacts: contacts,
     });
 })
+
+// Halaman form tambah kontak
+app.get('/contact/add', (req, res) => {
+    res.render('add-contact', {
+        title: 'Form Tambah Data Kontak',
+        layout: 'layouts/main-layout',
+    })
+})
+
+// Proses Data Contact
+app.post('/contact', (req, res) => {
+    addContact(req.body);
+    res.redirect('/contact');
+})
+
+// Halaman detail kontak
 app.get('/contact/:nama', (req, res) => {
     const contact = findContact(req.params.nama);
 
