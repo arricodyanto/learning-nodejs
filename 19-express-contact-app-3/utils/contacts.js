@@ -27,7 +27,7 @@ const findContact = (nama) => {
 }
 
 // menulis / menimpa contacts.json dengan data yang baru
-const saveContact = (contacts) => {
+const saveContacts = (contacts) => {
     fs.writeFileSync('data/contacts.json', JSON.stringify(contacts));
 }
 
@@ -35,7 +35,7 @@ const saveContact = (contacts) => {
 const addContact = (contact) => {
     const contacts = loadContact();
     contacts.push(contact);
-    saveContact(contacts);
+    saveContacts(contacts);
 }
 
 // cek nama kontak yang duplikat
@@ -44,9 +44,28 @@ const cekDuplikat = (nama) => {
     return contacts.find((contact) => contact.nama === nama);
 }
 
+// hapus contact
+const deleteContact = (nama) => {
+    const contacts = loadContact();
+    const filteredContacts = contacts.filter((contact) => contact.nama !== nama);
+    saveContacts(filteredContacts);
+}
+
+// mengubah contacts
+const updateContacts = (contactBaru) => {
+    const contacts = loadContact();
+    // hilangkan contact lama yang namanya sama dengan oldNama
+    const filteredContacts = contacts.filter((contact) => contact.nama !== contactBaru.oldNama);
+    delete contactBaru.oldNama;
+    filteredContacts.push(contactBaru);
+    saveContacts(filteredContacts);
+}
+
 module.exports = {
     loadContact,
     findContact,
     addContact,
-    cekDuplikat
+    cekDuplikat,
+    deleteContact,
+    updateContacts
 }

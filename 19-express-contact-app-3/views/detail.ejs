@@ -19,7 +19,9 @@
                                 <p class="card-text">
                                     <%= contact.email %>
                                 </p>
-                                <a href="/contact" class="card-link">&laquo; Kembali</a>
+                                <a href="/contact/edit/<%= contact.nama %>" class="btn btn-warning badge">Ubah</a>
+                                <a href="/contact/delete/<%= contact.nama %>" class="btn btn-danger badge" onclick="return confirm('Apakah Anda yakin?')">Hapus</a>
+                                <a href="/contact" class="card-link d-block mt-3">&laquo; Kembali</a>
                             </div>
                         </div>
                         <% } %>
